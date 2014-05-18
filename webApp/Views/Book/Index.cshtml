@@ -1,0 +1,55 @@
+﻿@using webApp.Models
+@model IEnumerable<webApp.Models.Book>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Author)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Author)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Book", new { id=item.Id }) |
+            </td>
+        </tr>
+    }
+</table>
+
+@using (Html.BeginForm("CreateBook", "Book"))
+{
+    <div>
+        <h4>Create Book</h4>
+        <hr />
+        <div>
+            @Html.LabelFor(model => new Book().Name)
+            <div>
+                @Html.EditorFor(model => new Book().Name)
+            </div>
+        </div>
+        
+        <div>
+            @Html.LabelFor(model => new Book().Author)
+            <div>
+                @Html.EditorFor(model => new Book().Author)
+            </div>
+        </div>
+
+        <div>
+            <div>
+                <input type="submit" value="Save" />
+            </div>
+        </div>
+    </div>
+}

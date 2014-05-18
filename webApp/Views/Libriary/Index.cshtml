@@ -1,0 +1,84 @@
+﻿@using webApp.Models
+@model IEnumerable<webApp.Models.User>
+
+
+<style>
+    table {
+        width: 50%;
+        text-align: left;
+        border-collapse: collapse;
+    }
+
+    td, th {
+        padding: 3px;
+        border: 1px solid #000;
+    }
+
+    th {
+        background: #afd792;
+        color: #333;
+    }
+</style>
+
+<script>
+    var row = undefined;
+    function changeColor(element) {
+        if (!row) {
+            row = element;
+            row.style.backgroundColor = 'red';
+            document.getElementById("link").href = "/Libriary/User/" + element.id + "/Books";
+        }
+        else {
+            row.style.backgroundColor = 'white';
+            row = element;
+            row.style.backgroundColor = 'red';
+            document.getElementById("link").href = "/Libriary/User/" + element.id + "/Books";
+        }
+    }
+</script>
+
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr id="@item.Id" onclick="changeColor(this)">
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Book", "Edit", new { id = item.Id }) |
+            </td>
+        </tr>
+    }
+
+</table>
+
+<p>
+    <a id="link" href="#">User Books</a>
+</p>
+
+@using (Html.BeginForm("CreateUser","Libriary"))
+{
+    <div>
+        <h4>Create User</h4>
+        <hr />
+        <div>
+            @Html.LabelFor(model => new User().Name)
+            <div>
+                @Html.EditorFor(model => model.First().Name)
+            </div>
+        </div>
+
+        <div>
+            <div>
+                <input type="submit" value="Save" />
+            </div>
+        </div>
+    </div>
+}
